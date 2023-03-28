@@ -1,38 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Heading One</h1>
-        <p>New Paragraph</p>
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: ["ready", "set", "GO"],
+      text: "",
+    };
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+  onSubmit(event) {
+    event.preventDefault();
+    let newList = [...this.state.list, this.state.text];
+    this.setState({ list: newList, text: "" });
+  }
+  render() {
+    return (
+      <div>
+        <h1>Hello World!</h1>
+        <form onSubmit={this.onSubmit}>
+          <input
+            type="text"
+            name="text"
+            id="text"
+            value={this.state.text}
+            onChange={(event) => this.setState({ text: event.target.value })}
+          />
+          <button type="submit">Add</button>
+        </form>
         <ul>
-          <li>
-            Item 1
-          </li>
-          <li>
-            Item 2
-          </li>
-          <li>
-            Item 3
-          </li>
+          {this.state.list.map((item, idx) => {
+            return <li key={item + idx}>{item}</li>;
+          })}
         </ul>
-        <p>
-          React is so cool!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;
